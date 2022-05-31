@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 using std::cout;
 
-void PrintArr(double *arr, size_t size)
+void PrintArr(const double* arr, const size_t size)
 {
     for (size_t i = 0; i < size; i++)
     {
@@ -9,7 +9,7 @@ void PrintArr(double *arr, size_t size)
     }
 }
 
-void PrintArr(int* arr, size_t size)
+void PrintArr(const int* arr, const size_t size)
 {
     for (size_t i = 0; i < size; i++)
     {
@@ -47,7 +47,7 @@ void SwapArr(int arr[], size_t size)
     cout << std::endl;
 }
 
-void InitMyArr3(int arr[], size_t size) 
+void InitMyArr3(int arr[], size_t size)
 {
     arr[0] = 1;
 
@@ -65,7 +65,7 @@ void InitMyArr3(int arr[], size_t size)
 
 void CircleArr(int* arr, const int size, int n)
 {
-    int *tempArr = new int[size];
+    int* tempArr = new int[size];
 
     n = n % size; //убираем полные циклы
 
@@ -95,7 +95,7 @@ void CircleArr(int* arr, const int size, int n)
             }
             else
             {
-                tempArr[i] = arr[-(size + n) + i ];
+                tempArr[i] = arr[-(size + n) + i];
             }
 
         }
@@ -105,10 +105,10 @@ void CircleArr(int* arr, const int size, int n)
     {
         arr[i] = tempArr[i];
     }
-
+    delete[]tempArr;
 }
 
-bool CheckBalance(int *arr, size_t size) 
+bool CheckBalance(int* arr, size_t size)
 {
     int leftSum = 0, rightSum = 0;
     for (size_t i = 0; i < size; i++)
@@ -122,8 +122,8 @@ bool CheckBalance(int *arr, size_t size)
         {
             rightSum += arr[j];
         }
-        
-        if(leftSum == rightSum)
+
+        if (leftSum == rightSum)
         {
             return true;
         }
@@ -160,7 +160,7 @@ int main()
     //Написать функцию, которой на вход подаётся одномерный массив и число n(может быть положительным 
     //или отрицательным), при этом метод должен циклически сместить все элементы массива на n позиций.
 
-    int myArr4[SIZE] = { 0, 1, 2, 3, 4, 5, 6, 7};
+    int myArr4[SIZE] = { 0, 1, 2, 3, 4, 5, 6, 7 };
     cout << "\n\nTask 5.4 \n";
     CircleArr(myArr4, SIZE, 10);
     PrintArr(myArr4, SIZE);
@@ -170,7 +170,7 @@ int main()
     //истину если в массиве есть место, в котором сумма левой и правой части массива равны.
 
     cout << "\n\nTask 5.5 \n";
-    int myArr5[SIZE] = { 1, 1, 0, 0, 0, 1, 0, 3};
+    int myArr5[SIZE] = { 1, 1, 0, 0, 0, 1, 0, 3 };
     cout << CheckBalance(myArr5, SIZE);
 
     return 0;
