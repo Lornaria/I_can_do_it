@@ -15,7 +15,7 @@ void initArrExp2(int *arr, const size_t size)
     }
 }
 
-void printArrAndDelete(int* arr, size_t size)
+void printArrAndDelete(int* arr, const size_t size)
 {
     for (size_t i = 0; i < size; i++)
     {
@@ -25,7 +25,7 @@ void printArrAndDelete(int* arr, size_t size)
     arr = nullptr;
 }
 
-void printArrAndDelete(int** arr, size_t size)
+void printArrAndDelete(int** arr, const size_t size)
 {
     for (size_t i = 0; i < size; i++)
     {
@@ -56,7 +56,7 @@ void initArrRand(int** arr, const size_t size)
 
 }
 
-void combineTwoFiles(std::string fileName1, std::string fileName2, std::string foutName)
+void combineTwoFiles(const std::string fileName1, const std::string fileName2, const std::string foutName)
 {
     std::ofstream fout(foutName);
     if (fout.is_open())
@@ -89,7 +89,7 @@ void combineTwoFiles(std::string fileName1, std::string fileName2, std::string f
     }
 
 }
-std::string searchWord(std::string fileName, std::string word)
+std::string searchWord(const std::string fileName, const std::string word)
 {
     std::ifstream fin(fileName);
     if (fin.is_open())
