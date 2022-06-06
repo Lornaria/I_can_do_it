@@ -93,16 +93,14 @@ int main()
 
     std::cout << "size of *pJohn: " << sizeof(*pJohn) << std::endl;
 
-    std::ofstream fout("John.txt");
+    std::ofstream fout("John.txt", std::ios_base::binary);
     if (fout.is_open())
     {
-        fout << "John has children : " << std::boolalpha << pJohn->hasChildren << std::noboolalpha << std::endl;
-        fout << "John's id: " << pJohn->id << std::endl;
-        fout << "John's salary: " << pJohn->salary << std::endl;
-        fout << "John's section: " << pJohn->section << std::endl;
-       
+        fout.write((char*)&pJohn, sizeof(*pJohn));
+
         fout.close();
     }
+
     delete pJohn;
 
 }
