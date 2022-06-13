@@ -83,22 +83,21 @@ void __fastcall initGame(TGame& g)
     }
 }
 
-void changingColorCross()
+void changingColor(TCell sign)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 9);
-}
-
-void changingColorZero()
-{
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 12);
-}
-
-void changingColorReset()
-{
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 15);
+    switch (sign)
+    {
+    case EMPTY:
+        SetConsoleTextAttribute(hConsole, 15);
+        break;
+    case CROSS:
+        SetConsoleTextAttribute(hConsole, 9);
+        break;
+    case ZERO:
+        SetConsoleTextAttribute(hConsole, 12);
+        break;
+    }
 }
 
 void __fastcall drawGame(const TGame& g)
@@ -117,16 +116,16 @@ void __fastcall drawGame(const TGame& g)
         {         
             if (g.ppField[y][x] == CROSS)
             {
-                changingColorCross();
+                changingColor(CROSS);
                 std::cout << g.ppField[y][x];
-                changingColorReset();
+                changingColor(EMPTY);
                 std::cout << " | ";
             }
             else if (g.ppField[y][x] == ZERO)
             {
-                changingColorZero();
+                changingColor(ZERO);
                 std::cout << g.ppField[y][x];
-                changingColorReset();
+                changingColor(EMPTY);
                 std::cout << " | ";
             }
             
@@ -379,7 +378,7 @@ int main()
 
     TGame g;
     initGame(g);
-    changingColorReset();
+    changingColor(EMPTY);
     drawGame(g);
 
     do
