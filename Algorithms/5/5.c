@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int** init2dArray(int rows, int cols) {  //инициализация двумерного массива и заполнение рандомными числами до 10
+int** init2dArray(int rows, int cols) {  //initialization of a two-dimensional array and filling with random numbers up to 10
     int **arr = malloc(sizeof(int*) * rows);
     for (int i = 0; i < rows; ++i) {
         *(arr + i) = malloc(sizeof(int) * cols);
