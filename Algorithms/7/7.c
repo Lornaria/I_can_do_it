@@ -69,6 +69,37 @@ void qsImp(int* arr, int first, int last) {
 
 }
 
+
+void myBucketSort(int* arr, int len) {
+    const int max = len;
+    const int b = 10;
+
+    int buckets[b][max+1];
+    for (int i = 0; i < b; ++i) {
+        buckets[i][max] = 0;
+    }
+
+    for (int digit = 1; digit < 1000000000; digit*=10) {
+        for (int i = 0; i < max; ++i) {
+                if (arr[i] % 2 == 0){
+                    int d = (arr[i] / digit) % b;
+                    buckets[d][buckets[d][max]++] = arr[i];
+                    arr[i] = -1;
+                }
+        }
+        int idx = 0;
+        for (int i = 0; i < b; ++i) {
+            for (int j = 0; j < buckets[i][max]; ++j) {
+                while (arr[idx] != -1){
+                    idx++;
+                }
+                arr[idx++] = buckets[i][j];
+            }
+            buckets[i][max] = 0;
+        }
+    }
+}
+
 int main(){
     const int SIZE = 20;
     int myArr[SIZE];
@@ -76,5 +107,11 @@ int main(){
     printIntArray(myArr, SIZE, 3);
     qsImp(myArr, 0, SIZE - 1);
     printIntArray(myArr, SIZE, 3);
+    printf("\n");
+    int myArr2[SIZE];
+    fillIntRandom(myArr2, SIZE, 100);
+    printIntArray(myArr2, SIZE, 3);
+    myBucketSort(myArr2, SIZE);
+    printIntArray(myArr2, SIZE, 3);
     return 0;
 }
