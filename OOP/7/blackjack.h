@@ -31,12 +31,12 @@ class Card {
 private:
 	Suit suit = spades;
 	Value value = two;
-	bool faceUp = false;
+	bool faceUp = true;
 public:
 	Card(Suit _suit, Value _value) : suit(_suit), value(_value) {}
 	Card(Suit _suit, Value _value, bool _faceUp) : suit(_suit), value(_value), faceUp(_faceUp) {}
 	Card() {}
-	~Card() { std::cout << __FUNCTION__ << std::endl; }
+	~Card() {}
 	void Flip() {
 		faceUp = !faceUp;
 	}
@@ -86,7 +86,7 @@ public:
 				}
 				++it;
 			}
-			while (sum > 21 || countAce > 0) {
+			while (sum > 21 && countAce > 0) {
 				sum -= 10;
 				countAce--;
 			}

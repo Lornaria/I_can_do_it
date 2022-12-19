@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <strstream>
 
 //1. Создайте класс Date с полями день, месяц, год и методами доступа к этим полям.
 //Перегрузите оператор вывода для данного класса.
@@ -97,7 +98,7 @@ public:
         hand.reserve(52);
         Populate();
     };
-    virtual ~Deck();
+    virtual ~Deck(){};
     
     void Populate() {
         Clear();
@@ -264,15 +265,29 @@ int main()
     //   Создается объект класса Game и запускается игровой процесс.
     //   Предусмотреть возможность повторной игры.
 
-    std::cout << "Enter names of the players: " << std::endl;
-    std::string names;
-    std::getline(std::cin, names);
-    std::cout << "names are: " << names << std::endl;
 
-    std::vector<std::string> vNames;
-    
+    static char sResponse = 'n';
+    do {
+        std::cin.ignore(32767, '\n');
+        std::cout << "Enter names of the players: " << std::endl;
+        std::string names;
+        
+        std::getline(std::cin, names);
+        std::stringstream sNames(names);
 
-    //Game myGame();
+        std::vector<std::string> vNames;
 
+        while (sNames >> names) {
+            vNames.push_back(names);
+        }
+
+        Game myGame(vNames);
+        myGame.Play();
+        std::cout << "Do you want to play again?(Y/N): ";
+        std::cin >> sResponse;
+
+    } while (sResponse == 'y' || sResponse == 'Y');
+
+    return 0;
 }
 
