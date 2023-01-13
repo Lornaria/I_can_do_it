@@ -6,6 +6,7 @@
 #include <sstream>
 #include <map>
 #include <algorithm>
+#include <regex>
 
 using std::cout;
 using std::endl;
@@ -24,20 +25,14 @@ void unicWords(T _begin, T _end) {
 //Далее программа должна вывести пользователю все предложения, а также количество слов в них, отсортировав предложения по количеству слов.
  
 void Task2() {
-    std::vector<std::string> vec;
     std::string text;
-    std::stringstream ss;
     cout << "Task2. Your text: ";
-    while (std::cin >> text) {
-        if (std::cin.peek() == 10) { 
-            ss << text;
-            break; 
-        }
-        ss << text << " ";
-    }
-    text.clear();
+    std::getline(std::cin, text);
+    std::regex re("[\\.!?]");
+    std::sregex_token_iterator first{ text.begin(), text.end(), re, -1 }, last;
     std::multimap<std::string, int> myMap;
-    auto countWords = [](std::string& _text) { //лямбда функция для подсчета кол-ва слов в тексте
+
+    auto countWords = [](std::string _text) {
         std::stringstream tempSS(_text);
         int count = 0;
         std::string oneWord;
@@ -46,12 +41,12 @@ void Task2() {
         }
         return count;
     };
-    while (std::getline(ss, text, '.'))
-    {
-        myMap.insert({ text + ".", countWords(text)});
+
+    for (std::sregex_token_iterator i = first; i != last; ++i) {
+        myMap.insert({ i->str() + i->second[0], countWords(i->str())}); //i->second[0] - разделитель (первый символ второй подстроки после разделения)
     }
     std::vector<std::pair<std::string, int>> sentences(myMap.begin(), myMap.end());
-    std::sort(sentences.begin(), sentences.end(), [](const auto& l, const auto& r) {
+    std::sort(sentences.begin(), sentences.end(), [](const auto& l, const auto& r) { //сортировка по кол-ву слов
         return l.second < r.second;
         });
     for (auto [sentence, value] : sentences) {
@@ -71,5 +66,6 @@ int main()
     unicWords(l.begin(), l.end());
     cout << endl;
 
+    //2.
     Task2();
 }
