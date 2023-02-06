@@ -28,27 +28,52 @@ namespace MyTools {
 
 	//=============================================================================================
 
-	void ClrScr();
+    class ScreenSingleton
+    {
+    public:
+        static ScreenSingleton& getInstance()
+        {
+            static ScreenSingleton theInstance;
+            return theInstance;
+        }
+	    void ClrScr();
 
-	void __fastcall GotoXY(double x, double y);
+	    void __fastcall GotoXY(double x, double y);
 
-	uint16_t GetMaxX();
+	    uint16_t GetMaxX();
 
-	uint16_t GetMaxY();
+	    uint16_t GetMaxY();
 
-    void SetColor(ConsoleColor color);
+        void SetColor(ConsoleColor color);
+    private:
+        ScreenSingleton() { }
+        ScreenSingleton(const ScreenSingleton& root) = delete;
+        ScreenSingleton& operator=(const ScreenSingleton&) = delete;
+    };
 
 	//=============================================================================================
 
-	void __fastcall OpenLogFile(const std::string& FN);
+    class FileLoggerSingletone {
+    public:
+        static FileLoggerSingletone& getInstance() {
+            static FileLoggerSingletone theInstance;
+            return theInstance;
+        }
+        void __fastcall OpenLogFile(const std::string& FN);
 
-	void CloseLogFile();
+        void CloseLogFile();
 
-	void __fastcall WriteToLog(const std::string& str);
+        void __fastcall WriteToLog(const std::string& str);
 
-	void __fastcall WriteToLog(const std::string& str, int n);
+        void __fastcall WriteToLog(const std::string& str, int n);
 
-	void __fastcall WriteToLog(const std::string& str, double d);
+        void __fastcall WriteToLog(const std::string& str, double d);
+    private:
+        FileLoggerSingletone(){}
+        FileLoggerSingletone(const FileLoggerSingletone& other) = delete;
+        FileLoggerSingletone& operator=(const FileLoggerSingletone&) = delete;
+    };
+	
 
 	//=============================================================================================
 
