@@ -27,22 +27,25 @@ public:
 
     class BombIterator {
     private:
-        const std::vector<DynamicObject*>& _vec;
+        const std::vector<DynamicObject*>* _pVec;
         int _curIndex;
-        DynamicObject** _ptr;
+        DynamicObject*const* _ptr;
     public:
-        BombIterator(std::vector<DynamicObject*>& vec) : _vec(vec), _curIndex(-1), _ptr(nullptr) { ++(*this); }
+        BombIterator(const std::vector<DynamicObject*>& vec) : _pVec(&vec), _curIndex(-1), _ptr(nullptr) { ++(*this); }
+        BombIterator() = default;
+
         void reset() { _curIndex = -1; _ptr = nullptr; }
         BombIterator& operator++ ();
         BombIterator& operator-- ();
-        DynamicObject*& operator*();
+        DynamicObject* operator*();
         bool operator==(BombIterator it);
         bool operator!=(BombIterator it);
 
+
     };
 
-    BombIterator _begin() { BombIterator it(vecDynamicObj); return it; }
-    BombIterator _end() { BombIterator it(vecDynamicObj); it.reset(); return it; }
+    BombIterator _begin() const { BombIterator it(vecDynamicObj); return it; }
+    BombIterator _end() const { BombIterator it(vecDynamicObj); it.reset(); return it; }
 private:
 
     void CheckPlaneAndLevelGUI();

@@ -226,22 +226,11 @@ vector<Bomb*> SBomber::FindAllBombs() const
 {
     vector<Bomb*> vecBombs;
 
-
     BombIterator it = _begin();
     for (; it != _end(); ++it)
     {
-        vecBombs.push_back(it);
+        vecBombs.push_back(dynamic_cast<Bomb*>(*it));
     }
-
-    /*for (size_t i = 0; i < vecDynamicObj.size(); i++)
-    {
-        Bomb* pBomb = dynamic_cast<Bomb*>(vecDynamicObj[i]);
-        if (pBomb != nullptr)
-        {
-            vecBombs.push_back(pBomb);
-        }
-    }*/
-
     return vecBombs;
 }
 
@@ -378,15 +367,15 @@ SBomber::BombIterator& SBomber::BombIterator::operator++() {
     _curIndex++;
     if (_curIndex == -1)
         _curIndex = 0;
-    for (; _curIndex < _vec.size(); _curIndex++)
+    for (; _curIndex < _pVec->size(); _curIndex++)
     {
-        if (dynamic_cast<Bomb*>(_vec[_curIndex]) != nullptr)
+        if (dynamic_cast<Bomb*>((*_pVec)[_curIndex]) != nullptr)
         {
-            _ptr = &_vec[_curIndex];
+            _ptr = &(*_pVec)[_curIndex];
             break;
         }
     }
-    if (_curIndex == _vec.size())
+    if (_curIndex == _pVec->size())
     {
         _curIndex = -1;
         _ptr = nullptr;
@@ -396,13 +385,13 @@ SBomber::BombIterator& SBomber::BombIterator::operator++() {
 
 SBomber::BombIterator& SBomber::BombIterator::operator--() {
     if (_curIndex == -1) {
-        _curIndex = _vec.size() - 1;
+        _curIndex = _pVec->size() - 1;
     } 
     for (; _curIndex >= 0; _curIndex--)
     {
-        if (dynamic_cast<Bomb*>(_vec[_curIndex]) != nullptr)
+        if (dynamic_cast<Bomb*>((*_pVec)[_curIndex]) != nullptr)
         {
-            _ptr = &_vec[_curIndex];
+            _ptr = &(*_pVec)[_curIndex];
             break;
         }
     }
@@ -413,14 +402,14 @@ SBomber::BombIterator& SBomber::BombIterator::operator--() {
     return *this;
 }
 
-DynamicObject*& SBomber::BombIterator::operator*() {
-    return _vec.at(_curIndex);
+DynamicObject* SBomber::BombIterator::operator*() {
+    return (*_pVec).at(_curIndex);
 }
 
 bool SBomber::BombIterator::operator==(BombIterator it) {
     if (_curIndex == it._curIndex &&
         _ptr == it._ptr &&
-        _vec == it._vec)
+        _pVec == it._pVec)
     {
         return true;
     }
