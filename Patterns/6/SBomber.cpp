@@ -8,6 +8,7 @@
 #include "Ground.h"
 #include "Tank.h"
 #include "House.h"
+#include "Mediator.h"
 
 using namespace std;
 using namespace MyTools;
@@ -31,6 +32,9 @@ SBomber::SBomber()
     vecDynamicObj.push_back(p);
 
     LevelGUI* pGUI = new LevelGUI;
+
+    pMed = new Mediator(pGUI); //************************** added for lesson 6 *******************************
+
     pGUI->SetParam(passedTime, fps, bombsNumber, score);
     const uint16_t maxX = ScreenSingleton::getInstance().GetMaxX();
     const uint16_t maxY = ScreenSingleton::getInstance().GetMaxY();
@@ -48,12 +52,13 @@ SBomber::SBomber()
     pGr->SetWidth(width - 2);
     vecStaticObj.push_back(pGr);
 
-    Tank* pTank = new Tank;
+    Tank* pTank = new Tank(pMed); //************************** changed for lesson 6 *******************************
     pTank->SetWidth(13);
     pTank->SetPos(30, groundY - 1);
     vecStaticObj.push_back(pTank);
 
-    pTank = new Tank;
+    pTank = new Tank(pMed); //****************************** changed for lesson 6 *******************************
+
     pTank->SetWidth(13);
     pTank->SetPos(50, groundY - 1);
     vecStaticObj.push_back(pTank);
@@ -62,15 +67,6 @@ SBomber::SBomber()
     pHouse->SetWidth(13);
     pHouse->SetPos(80, groundY - 1);
     vecStaticObj.push_back(pHouse);
-
-    /*
-    Bomb* pBomb = new Bomb;
-    pBomb->SetDirection(0.3, 1);
-    pBomb->SetSpeed(2);
-    pBomb->SetPos(51, 5);
-    pBomb->SetSize(SMALL_CRATER_SIZE);
-    vecDynamicObj.push_back(pBomb);
-    */
 }
 
 SBomber::~SBomber()
@@ -90,6 +86,8 @@ SBomber::~SBomber()
             delete vecStaticObj[i];
         }
     }
+
+    delete pMed; //************************** added for lesson 6 *******************************
 }
 
 void SBomber::MoveObjects()

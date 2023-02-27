@@ -7,6 +7,6 @@ private:
 	LevelGUI* pLvlGUI;
 public:
 	Mediator(LevelGUI* _pLvlGUI) : pLvlGUI(_pLvlGUI) {}
-	void passMessage(std::string& message);
+	void passMessage(const std::string& message);
 };
 

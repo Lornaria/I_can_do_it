@@ -1,5 +1,5 @@
 #include "Mediator.h"
 
-void Mediator::passMessage(std::string& message) {
+void Mediator::passMessage(const std::string& message) {
 	pLvlGUI->AddPhrase(message);
 }

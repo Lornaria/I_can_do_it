@@ -9,7 +9,7 @@
 class LevelGUI : public GameObject {
 public:
 
-    LevelGUI() : bombsNumber(0), score(0), passedTime(0), fps(0), height(0) { }
+    LevelGUI() : bombsNumber(0), score(0), passedTime(0), fps(0), height(0) {}
 
     void __fastcall SetParam(uint64_t passedTimeNew, uint64_t fpsNew, uint16_t bombsNumberNew, int16_t scoreNew);
     
@@ -19,16 +19,16 @@ public:
     inline void SetFinishX(uint16_t finishXN) { finishX = finishXN; }
 
     void Draw() const override;
-//*********************| Start of changes for lesson 5 |**************************
+//*********************| Start of changes for lesson 6 |**************************
 
-    void AddPhrase(std::string& _phrase) {
-        q.push(_phrase);
+    void AddPhrase(const std::string& _phrase) {
+        queuePhrases.push(_phrase);
     }
 
 private:
-    std::queue<std::string> q;
+    std::queue<std::string> queuePhrases;
 
-//*********************| End of changes for lesson 5 |****************************
+//*********************| End of changes for lesson 6 |****************************
     uint16_t height;
     uint16_t finishX = 109;
 
