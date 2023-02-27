@@ -26,7 +26,8 @@ public:
     }
 
 private:
-    std::queue<std::string> queuePhrases;
+    mutable std::queue<std::string> queuePhrases;
+    mutable uint64_t timePhrase = 0;
 
 //*********************| End of changes for lesson 6 |****************************
     uint16_t height;

@@ -42,6 +42,30 @@ void LevelGUI::Draw() const
     cout << "BombsNum: " << bombsNumber;
     ScreenSingleton::getInstance().GotoXY(62, 1);
     cout << "Score: " << score;
+
+//*********************| Start of changes for lesson 6 |**************************
+
+    ScreenSingleton::getInstance().GotoXY(82, 1);
+    if (timePhrase == 0) {
+        timePhrase = passedTime + 3000;
+        if (!queuePhrases.empty()) {
+            cout << queuePhrases.front();
+        }
+    }
+    else if (timePhrase <= passedTime) {
+        timePhrase = passedTime + 3000;
+        queuePhrases.pop();
+        if (!queuePhrases.empty()) {
+            cout << queuePhrases.front();
+        }
+    }
+    else {
+        if (!queuePhrases.empty()) {
+            cout << queuePhrases.front();
+        }
+    }
+
+//*********************| End of changes for lesson 6 |****************************
 }
 
 void __fastcall LevelGUI::SetParam(uint64_t passedTimeNew, uint64_t fpsNew, uint16_t bombsNumberNew, int16_t scoreNew)
