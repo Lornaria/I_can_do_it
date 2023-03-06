@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include <optional>
 
 class SBomber
 {
@@ -32,7 +33,7 @@ private:
     void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
     void __fastcall CheckDestoyableObjects(Bomb* pBomb);
-    void FindIfPlaceAvailable(DestroyableGroundObject* pObject, std::vector<DestroyableGroundObject*>& vecDestoyableGroundObjects); //******************* added for lesson 8 **********************************************************
+    std::optional<double> FindIfPlaceAvailable(DestroyableGroundObject* pObject, std::vector<DestroyableGroundObject*>& vecDestoyableGroundObjects); //******************* added for lesson 8 **********************************************************
 
     void __fastcall DeleteDynamicObj(DynamicObject * pBomb);
     void __fastcall DeleteStaticObj(GameObject* pObj);

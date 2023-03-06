@@ -312,31 +312,46 @@ void SBomber::ProcessKBHit()
     }
 }
 
-void SBomber::FindIfPlaceAvailable(DestroyableGroundObject* pObject, vector<DestroyableGroundObject*>& vecDestoyableGroundObjects) //******************* added for lesson 8 **********************************************************
+//********************************** start of changes for lesson 8 **********************************************************
+
+optional<double> SBomber::FindIfPlaceAvailable(DestroyableGroundObject* pObject, vector<DestroyableGroundObject*>& vecDestoyableGroundObjects) 
 {
-    pObject->SetPos(FindGround()->GetX(), pObject->GetY());
     const double size = pObject->GetWidth();
-    uint16_t finishX = FindLevelGUI()->GetFinishX();
-    for (size_t i = 0; i < vecDestoyableGroundObjects.size(); i++)
-    {
-        const double x1 = pObject->GetX() + 2;
-        const double x2 = x1 + size - 1;
-        if (vecDestoyableGroundObjects[i]->isInside(x1, x2))
-        {
-            
+    uint16_t finishX = FindLevelGUI()->GetFinishX() - size;
+    double x1 = FindGround()->GetX() + 2;
+    double x2 = x1 + size;
+    size_t sizeOfVec = vecDestoyableGroundObjects.size();
+    while (x1 <= finishX) {
+        for (size_t i = 0; i < sizeOfVec; i++){
+            if (vecDestoyableGroundObjects[i]->isInside(x1, x2)){
+                break;
+            }
+            if (i == sizeOfVec - 1) {
+                return x1;
+            }
         }
+        x1 = x1 + 3;
+        x2 = x2 + 3;
     }
+    return nullopt;
 }
 
-void SBomber::CloneAndPlaceDestroyableObject() { //******************* added for lesson 8 **********************************************************
+void SBomber::CloneAndPlaceDestroyableObject() { 
     vector<DestroyableGroundObject*> vecDestoyableObjects = FindDestoyableGroundObjects();
     std::mt19937 rnd(23);
     std::uniform_int_distribution<int> distribVec(0, vecDestoyableObjects.size() - 1);
     int randObj = distribVec(rnd);
-    
     DestroyableGroundObject* newObject = vecDestoyableObjects[randObj]->clone();
-
+    optional<double> newPlace = FindIfPlaceAvailable(newObject, vecDestoyableObjects);
+    if (newPlace.has_value()) {
+        newObject->SetPos(newPlace.value(), newObject->GetY());
+        vecStaticObj.push_back(newObject);
+    }
+    else {
+        delete newObject;
+    }
 }
+//********************************** end of changes for lesson 8 **********************************************************
 
 void SBomber::DrawFrame()
 {
