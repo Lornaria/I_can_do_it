@@ -51,3 +51,34 @@ void MainWindow::on_checkBox_icons_stateChanged(int arg1)
     }
 }
 
+
+void MainWindow::on_pushButton_up_clicked()
+{
+    QModelIndex index = ui->listView->currentIndex();
+    int row = ui->listView->currentIndex().row();
+    if(row != 0){
+        QModelIndex tempIndex = model->index(row - 1, 0);
+        QMap<int, QVariant> itemData1 = model->itemData(index);
+        QMap<int, QVariant> itemData2 = model->itemData(tempIndex);
+        model->setItemData(index, itemData2);
+        model->setItemData(tempIndex, itemData1);
+        ui->listView->setCurrentIndex(tempIndex);
+    }
+}
+
+
+
+void MainWindow::on_pushButton_down_clicked()
+{
+    QModelIndex index = ui->listView->currentIndex();
+    int row = ui->listView->currentIndex().row();
+    if(row < model->rowCount()){
+        QModelIndex tempIndex = model->index(row + 1, 0);
+        QMap<int, QVariant> itemData1 = model->itemData(index);
+        QMap<int, QVariant> itemData2 = model->itemData(tempIndex);
+        model->setItemData(index, itemData2);
+        model->setItemData(tempIndex, itemData1);
+        ui->listView->setCurrentIndex(tempIndex);
+    }
+}
+

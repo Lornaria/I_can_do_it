@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
+    <width>340</width>
     <height>419</height>
    </rect>
   </property>
@@ -63,13 +63,39 @@
      <string>Icons mode</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_up">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>90</y>
+      <width>51</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Up</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_down">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>130</y>
+      <width>51</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Down</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>289</width>
+     <width>340</width>
      <height>21</height>
     </rect>
    </property>

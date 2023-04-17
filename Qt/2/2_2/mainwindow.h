@@ -23,6 +23,10 @@ private slots:
 
     void on_checkBox_icons_stateChanged(int arg1);
 
+    void on_pushButton_up_clicked();
+
+    void on_pushButton_down_clicked();
+
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
