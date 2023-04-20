@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QTextStream>
 #include <QFileDialog>
-//#include <QObject>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -37,8 +37,7 @@ void MainWindow::on_pushButton_save_clicked()
 
 void MainWindow::on_pushButton_open_clicked()
 {
-    QString s = QFileDialog::getOpenFileName(this, "Заголовок окна",
-    QDir::current().path(), tr("Text file (*.txt)"));
+    QString s = QFileDialog::getOpenFileName(this, "Open file", QDir::current().path(), tr("Text file (*.txt)"));
     if (s.length() > 0){
         int index = s.indexOf(".txt");
         QFile file(s);
@@ -51,5 +50,17 @@ void MainWindow::on_pushButton_open_clicked()
             file.close();
         }
     }
+}
+
+
+void MainWindow::on_pushButton_help_clicked()
+{
+    //:/help/help.txt
+    QFile file(":/help/help.txt");
+    file.open(QFile::ReadOnly);
+    QTextStream stream(&file);
+    QString str = stream.readAll();
+    file.close();
+    QMessageBox::information(this, "Help", str);
 }
 
