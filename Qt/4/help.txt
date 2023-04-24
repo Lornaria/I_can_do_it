@@ -1,0 +1,3 @@
+Save - saves file in .txt format
+Open - opens .txt file for editing in program
+Help - provides vital information
