@@ -3,6 +3,9 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QApplication>
+
+//#define RELEASE(p) if (p) {delete p; p = NULL;}
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -10,11 +13,29 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+//    rusB = new QPushButton(this);
+//    bool rez = (rusB != NULL);
+//    enB = new QPushButton(this);
+//    rez &= (enB != NULL);
+//    if (!rez) {
+//    qApp->quit();
+//    return;
+//    }
+//    rusB->move(80, 370);
+//    enB->move(80, 470);
+//    rusB->resize(200, 30);
+//    enB->resize(200, 30);
+//    //switchLanguage(QLocale::system().name());
+//    connect(rusB, SIGNAL(clicked()), this, SLOT(clickSwitch()));
+//    connect(enB, SIGNAL(clicked()), this, SLOT(clickSwitch()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+//    RELEASE(rusB);
+//    RELEASE(enB);
 }
 
 
@@ -55,7 +76,6 @@ void MainWindow::on_pushButton_open_clicked()
 
 void MainWindow::on_pushButton_help_clicked()
 {
-    //:/help/help.txt
     QFile file(":/help/help.txt");
     file.open(QFile::ReadOnly);
     QTextStream stream(&file);
@@ -64,3 +84,20 @@ void MainWindow::on_pushButton_help_clicked()
     QMessageBox::information(this, "Help", str);
 }
 
+//void MainWindow::switchLanguage(QString language)
+//{
+//    //translater.load("QtLanguage_" + language + ".qm");
+//    //translater.load("QtLanguage_ru.qm");
+//    translater.load(":/tr/QtLanguage_ru.qm");
+//    qApp->installTranslator(&translater);
+//    QString str = tr("Switch language on ");
+//    rusB->setText(str + "Русский");
+//    enB->setText(str + "English");
+//}
+
+//void MainWindow::clickSwitch()
+//{
+//    QObject *obj = sender();
+//    if (obj == rusB)switchLanguage("ru");
+//    if (obj == enB)switchLanguage("en");
+//}
