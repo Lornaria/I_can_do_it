@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class UCameraComponent;
 class USpringArmComponent;
+class ATankPlayerController;
 
 UCLASS()
 class TANKGB4_API ATankPawn : public APawn
@@ -29,9 +30,18 @@ protected:
 		float MoveSpeed = 100;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
 		float RotationSpeed = 100;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement|Speed")
+		float InterpolationKey = 0.1f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
+		float TurretRotationInterpolationKey = 0.5f;
 
 	float TargetForwardAxisValue = 0.0f;
 	float TargetRightAxisValue = 0.0f;
+	float TargetRotateAxisValue = 0.0f;
+	float CurrentRotateAxisValue = 0.0f;
+
+	UPROPERTY()
+		ATankPlayerController* TankController;
 
 public:
 	// Sets default values for this pawn's properties
@@ -40,6 +50,8 @@ public:
 		void MoveForward(float AxisValue);
 	UFUNCTION()
 		void MoveRight(float AxisValue);
+	UFUNCTION()
+		void RotateRight(float AxisValue);
 
 	void MoveAdd(float DeltaTime);
 
