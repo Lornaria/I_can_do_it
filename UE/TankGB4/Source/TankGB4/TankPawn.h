@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Cannon.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "TankPawn.generated.h"
@@ -35,6 +36,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Speed")
 		float TurretRotationInterpolationKey = 0.5f;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
+		UArrowComponent* CannonSetupPoint;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Cannon")
+		TSubclassOf<ACannon> CannonClass;
+	UPROPERTY()
+		ACannon* Cannon;
+
 	float TargetForwardAxisValue = 0.0f;
 	float TargetRightAxisValue = 0.0f;
 	float TargetRotateAxisValue = 0.0f;
@@ -54,6 +63,11 @@ public:
 		void RotateRight(float AxisValue);
 
 	void MoveAdd(float DeltaTime);
+
+	UFUNCTION()
+		void Fire();
+protected:
+	void SetupCannon();
 
 protected:
 	// Called when the game starts or when spawned

@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "TankPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/ArrowComponent.h"
 
 //DECLARE_LOG_CATEGORY_EXTERN(TankLog, All, All);
 //DEFINE_LOG_CATEGORY(TankLog);
@@ -21,6 +22,9 @@ ATankPawn::ATankPawn()
 
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Tank turret"));
 	TurretMesh->SetupAttachment(BodyMesh);
+
+	CannonSetupPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("Cannon setup point"));
+	CannonSetupPoint->AttachToComponent(TurretMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring arm"));
 	SpringArm->SetupAttachment(BodyMesh);
@@ -80,11 +84,31 @@ void ATankPawn::MoveAdd(float DeltaTime)
 
 }
 
+void ATankPawn::Fire()
+{
+	if (Cannon) {
+		Cannon->Fire();
+	}
+}
+
+void ATankPawn::SetupCannon()
+{
+	if (Cannon) {
+		Cannon->Destroy();
+	}
+	FActorSpawnParameters params;
+	params.Instigator = this;
+	params.Owner = this;
+	Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass, params);
+	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+}
+
 // Called when the game starts or when spawned
 void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
+	SetupCannon();
 	
 }
 
