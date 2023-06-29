@@ -32,17 +32,40 @@ void ACannon::Fire()
 	ReadyToFire = false;
 
 	if (Type == ECannonType::FireProjectile) {
-		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Green, "Fire - projectile");
+		GEngine->AddOnScreenDebugMessage(1, 1, FColor::Green, "Fire - projectile");
+		Ammo--;
+		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
 	}
-	else {
-		GEngine->AddOnScreenDebugMessage(10, 1, FColor::Green, "Fire - trace");
+	else if (Type == ECannonType::FireTrace) {
+		GEngine->AddOnScreenDebugMessage(1, 1, FColor::Green, "Fire - trace");
+		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
 	}
+	else if (Type == ECannonType::Autocannon) {
+		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle2, this, &ACannon::FireAutocannon, AutocannonReloadTime, true, 0.01);
+		Ammo--;
+	}
+	
+}
+
+void ACannon::FireSpecial()
+{
+	if (!ReadyToFire) {
+		return;
+	}
+	ReadyToFire = false;
+	Ammo--;
+	GEngine->AddOnScreenDebugMessage(1, 1, FColor::Blue, "Fire special");
 	GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
 }
 
 bool ACannon::IsReadyToFire()
 {
 	return ReadyToFire;
+}
+
+int ACannon::GetAmmo()
+{
+	return Ammo;
 }
 
 // Called when the game starts or when spawned
@@ -56,6 +79,19 @@ void ACannon::BeginPlay()
 void ACannon::Reload()
 {
 	ReadyToFire = true;
+}
+
+void ACannon::FireAutocannon()
+{
+	if (AutocannonNumProjectilesFired == AutocannonNumProjectilesToFire) {
+		GetWorld()->GetTimerManager().ClearTimer(ReloadTimerHandle2);
+		AutocannonNumProjectilesFired = 0;
+		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
+		return;
+	}
+	AutocannonNumProjectilesFired++;
+	GEngine->AddOnScreenDebugMessage(AutocannonNumProjectilesFired + 1, 1, FColor::Purple, "Fire - autocannon projectile");
+	UE_LOG(LogTemp, Warning, TEXT("AutocannonNumProjectilesFired = %d"), AutocannonNumProjectilesFired);
 }
 
 // Called every frame

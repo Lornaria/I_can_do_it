@@ -44,6 +44,9 @@ protected:
 	UPROPERTY()
 		ACannon* Cannon;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Cannon")
+		int Ammo = 5;
+
 	float TargetForwardAxisValue = 0.0f;
 	float TargetRightAxisValue = 0.0f;
 	float TargetRotateAxisValue = 0.0f;
@@ -66,6 +69,8 @@ public:
 
 	UFUNCTION()
 		void Fire();
+	UFUNCTION()
+		void FireSpecial();
 protected:
 	void SetupCannon();
 

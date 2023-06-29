@@ -86,8 +86,23 @@ void ATankPawn::MoveAdd(float DeltaTime)
 
 void ATankPawn::Fire()
 {
-	if (Cannon) {
+	if (Cannon && Cannon->GetAmmo() > 0) {
 		Cannon->Fire();
+		GEngine->AddOnScreenDebugMessage(20, 1, FColor::Yellow, FString::Printf(TEXT("Ammo - %d"), Cannon->GetAmmo()));
+	}
+	else if (Cannon->GetAmmo() == 0) {
+		GEngine->AddOnScreenDebugMessage(2, 1, FColor::Red, "No ammo!");
+	}
+}
+
+void ATankPawn::FireSpecial()
+{
+	if (Cannon && Cannon->GetAmmo() > 0) {
+		Cannon->FireSpecial();
+		GEngine->AddOnScreenDebugMessage(2, 1, FColor::Yellow, FString::Printf(TEXT("Ammo - %d"), Cannon->GetAmmo()));
+	}
+	else if (Cannon->GetAmmo() == 0) {
+		GEngine->AddOnScreenDebugMessage(2, 1, FColor::Red, "No ammo!");
 	}
 }
 
