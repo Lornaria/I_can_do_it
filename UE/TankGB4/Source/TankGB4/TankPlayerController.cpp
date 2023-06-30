@@ -30,7 +30,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 	dir.Normalize();
 	MousePos = pawnPos + dir * 1000;
 
-	DrawDebugLine(GetWorld(), pawnPos, MousePos, FColor::Green, false, 0.1f, 0, 5);
+	//DrawDebugLine(GetWorld(), pawnPos, MousePos, FColor::Green, false, 0.1f, 0, 5);
 }
 
 void ATankPlayerController::BeginPlay()

@@ -6,6 +6,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "TimerManager.h"
 #include "Engine/Engine.h"
+#include "Projectile.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ACannon::ACannon()
@@ -33,11 +35,33 @@ void ACannon::Fire()
 
 	if (Type == ECannonType::FireProjectile) {
 		GEngine->AddOnScreenDebugMessage(1, 1, FColor::Green, "Fire - projectile");
+		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
+		if (projectile) {
+			projectile->Start();
+		}
 		Ammo--;
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
 	}
 	else if (Type == ECannonType::FireTrace) {
 		GEngine->AddOnScreenDebugMessage(1, 1, FColor::Green, "Fire - trace");
+		
+		FHitResult hitResult;
+		FCollisionQueryParams traceParams = FCollisionQueryParams(FName(TEXT("FireTrace")), true, this);
+		traceParams.bTraceComplex = true;
+		traceParams.bReturnPhysicalMaterial = false;
+
+		FVector start = ProjectileSpawnPoint->GetComponentLocation();
+		FVector end = ProjectileSpawnPoint->GetForwardVector() * FireRange + start;
+		if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_Visibility, traceParams)) {
+			DrawDebugLine(GetWorld(), start, hitResult.Location, FColor::Purple, false, 0.5f, 0, 5);
+			if (hitResult.Actor.Get()) {
+				hitResult.Actor.Get()->Destroy();
+			}
+		}
+		else {
+			DrawDebugLine(GetWorld(), start, end, FColor::Purple, false, 0.5f, 0, 5);
+		}
+
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, this, &ACannon::Reload, 1 / FireRate, false);
 	}
 	else if (Type == ECannonType::Autocannon) {

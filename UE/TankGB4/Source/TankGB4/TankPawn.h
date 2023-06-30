@@ -71,8 +71,8 @@ public:
 		void Fire();
 	UFUNCTION()
 		void FireSpecial();
-protected:
-	void SetupCannon();
+
+	void SetupCannon(TSubclassOf<ACannon> CannonClassGet);
 
 protected:
 	// Called when the game starts or when spawned
