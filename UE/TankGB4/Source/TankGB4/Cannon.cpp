@@ -92,6 +92,11 @@ int ACannon::GetAmmo()
 	return Ammo;
 }
 
+void ACannon::AddAmmo(int NewAmmo)
+{
+	Ammo += NewAmmo;
+}
+
 // Called when the game starts or when spawned
 void ACannon::BeginPlay()
 {

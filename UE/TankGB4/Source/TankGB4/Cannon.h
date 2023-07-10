@@ -53,6 +53,7 @@ public:
 	void FireSpecial();
 	bool IsReadyToFire();
 	int GetAmmo();
+	void AddAmmo(int NewAmmo);
 
 protected:
 	// Called when the game starts or when spawned

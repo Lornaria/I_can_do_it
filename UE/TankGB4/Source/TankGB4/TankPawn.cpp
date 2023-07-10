@@ -116,6 +116,16 @@ void ATankPawn::ChangeCannon()
 	}
 }
 
+TSubclassOf<ACannon> ATankPawn::GetCannonClass()
+{
+	return Cannon->GetClass();
+}
+
+void ATankPawn::AddAmmo(int NewAmmo)
+{
+	Cannon->AddAmmo(NewAmmo);
+}
+
 //void ATankPawn::SetCannonClass(TSubclassOf<ACannon> CannonClass_)
 //{
 //	if (Cannon->GetClass() == CannonClass) {

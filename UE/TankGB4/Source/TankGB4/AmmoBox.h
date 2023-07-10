@@ -17,6 +17,8 @@ protected:
 		UStaticMeshComponent* Mesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
 		TSubclassOf<ACannon> CannonClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
+		int Ammo = 10;
 public:	
 	// Sets default values for this actor's properties
 	AAmmoBox();
