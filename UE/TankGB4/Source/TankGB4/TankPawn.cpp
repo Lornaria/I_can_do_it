@@ -106,7 +106,28 @@ void ATankPawn::FireSpecial()
 	}
 }
 
-void ATankPawn::SetupCannon()
+void ATankPawn::ChangeCannon()
+{
+	if (Cannon->GetClass() == CannonClass) {
+		SetupCannon(CannonClassAnother);
+	}
+	else {
+		SetupCannon(CannonClass);
+	}
+}
+
+//void ATankPawn::SetCannonClass(TSubclassOf<ACannon> CannonClass_)
+//{
+//	if (Cannon->GetClass() == CannonClass) {
+//		CannonClass = CannonClass_;
+//		
+//	}
+//	else {
+//		CannonClassAnother = CannonClass_;
+//	}
+//}
+
+void ATankPawn::SetupCannon(TSubclassOf<ACannon> CannonClassGet)
 {
 	if (Cannon) {
 		Cannon->Destroy();
@@ -114,7 +135,7 @@ void ATankPawn::SetupCannon()
 	FActorSpawnParameters params;
 	params.Instigator = this;
 	params.Owner = this;
-	Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass, params);
+	Cannon = GetWorld()->SpawnActor<ACannon>(CannonClassGet, params);
 	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 }
 
@@ -123,8 +144,7 @@ void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
-	SetupCannon();
-	
+	SetupCannon(CannonClass);
 }
 
 // Called every frame

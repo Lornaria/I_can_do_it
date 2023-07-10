@@ -8,6 +8,7 @@
 #include "Cannon.generated.h"
 
 class UArrowComponent;
+class AProjectile;
 
 UCLASS()
 class TANKGB4_API ACannon : public AActor
@@ -27,6 +28,9 @@ protected:
 		float FireDamage = 1;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fire params")
 		ECannonType Type = ECannonType::FireProjectile;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fire params")
+		TSubclassOf<AProjectile> ProjectileClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fire params")
 		int Ammo = 5;
