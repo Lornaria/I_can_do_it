@@ -106,6 +106,27 @@ void ATankPawn::FireSpecial()
 	}
 }
 
+void ATankPawn::ChangeCannon()
+{
+	if (Cannon->GetClass() == CannonClass) {
+		SetupCannon(CannonClassAnother);
+	}
+	else {
+		SetupCannon(CannonClass);
+	}
+}
+
+//void ATankPawn::SetCannonClass(TSubclassOf<ACannon> CannonClass_)
+//{
+//	if (Cannon->GetClass() == CannonClass) {
+//		CannonClass = CannonClass_;
+//		
+//	}
+//	else {
+//		CannonClassAnother = CannonClass_;
+//	}
+//}
+
 void ATankPawn::SetupCannon(TSubclassOf<ACannon> CannonClassGet)
 {
 	if (Cannon) {
@@ -124,8 +145,6 @@ void ATankPawn::BeginPlay()
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
 	SetupCannon(CannonClass);
-	UE_LOG(LogTemp, Warning, TEXT("TankPawn %p"), this);
-	UE_LOG(LogTemp, Warning, TEXT("Canon %p"), Cannon);
 }
 
 // Called every frame

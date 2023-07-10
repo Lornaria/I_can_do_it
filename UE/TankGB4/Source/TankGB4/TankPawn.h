@@ -39,8 +39,13 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 		UArrowComponent* CannonSetupPoint;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Turret|Cannon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turret|Cannon")
 		TSubclassOf<ACannon> CannonClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turret|Cannon")
+		TSubclassOf<ACannon> CannonClassAnother;
+
+
 	UPROPERTY()
 		ACannon* Cannon;
 
@@ -71,6 +76,11 @@ public:
 		void Fire();
 	UFUNCTION()
 		void FireSpecial();
+	UFUNCTION()
+		void ChangeCannon();
+	
+	//UFUNCTION()
+	//	void SetCannonClass(TSubclassOf<ACannon> CannonClass);
 
 	void SetupCannon(TSubclassOf<ACannon> CannonClassGet);
 
